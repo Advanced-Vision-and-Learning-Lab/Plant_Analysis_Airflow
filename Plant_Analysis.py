@@ -25,7 +25,7 @@ import matplotlib as mpl
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import yaml
 
-file = open('/home/grads/u/uday/Documents/Agri_Project/Airflow/dags/pipeline_config.yaml', 'r')
+file = open('pipeline_config.yaml', 'r')
 pipeline_config = yaml.safe_load(file)
 file.close()
 
@@ -41,7 +41,7 @@ class Plant_Analysis:
         self.show_color_images = True
         self.plant_paths = {}
         self.plant_stats = {}
-        self.interm_result_folder = '/home/grads/u/uday/Documents/Agri_Project/Airflow/dags/Interm_Results'
+        self.interm_result_folder = './Interm_Results'
         self.segmentation_model_weights_path = pipeline_config['segmentation_model_weights_path']
         self.segmentation_model = None
         self.variable_k = pipeline_config['cca_variable_k']

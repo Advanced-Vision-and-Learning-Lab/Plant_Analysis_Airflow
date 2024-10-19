@@ -29,9 +29,9 @@ dag = DAG(
 )
 
 # Define the input and output directories
-input_plants_folder = '/home/grads/u/uday/Documents/Agri_Project/Airflow/dags/Plants'
-interm_folder = '/home/grads/u/uday/Documents/Agri_Project/Airflow/dags/interm_objects'
-save_analysis_result_folder = '/home/grads/u/uday/Documents/Agri_Project/Airflow/dags/Viz_Result'
+input_plants_folder = '../Data/Raw_Images/Plant12'
+interm_folder = 'interm_objects'
+save_analysis_result_folder = 'Viz_Result'
 
 # Ensure the output directory exists
 os.makedirs(save_analysis_result_folder, exist_ok=True)
