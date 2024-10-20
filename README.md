@@ -104,7 +104,7 @@ airflow standalone
 * FileSensor task was used to trigger the DAG for every new plant entry into the dataset. However, it did not work as intended after testing. After looking into the documentation, it was found that FileSensor will be triggered when the folder associated is not empty. A new mechanism or a different design is needed to address this.
 * The next step in the Airflow conversion is to containerize each task (pipeline module) in the DAG. As the IT does not support docker containers in the Lab GPU systems, it is suggested to use podman (a docker alternative)
 
-## Contanerization Considerations
+## Containerization Considerations
 ---
 * Make a base podman image that has the pipeline prerequisites installed (PlantCV, ultralytics, scikit-image, PIL, OpenCV, etc..)
 * Prepare a shell command that runs a podman container from the pipeline image. Mount the input, interm, and output folders to each containers
