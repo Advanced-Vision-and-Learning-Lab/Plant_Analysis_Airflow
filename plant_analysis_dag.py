@@ -29,7 +29,7 @@ dag = DAG(
 )
 
 # Define the input and output directories
-input_plants_folder = '../Data/Raw_Images/Plant12'
+input_plants_folder = '../Data/Raw_Images'
 interm_folder = 'interm_objects'
 save_analysis_result_folder = 'Viz_Result'
 
@@ -147,16 +147,16 @@ def save_analysis_results():
     f.close()
     del plant_analysis
 
-# Define the tasks
-check_for_new_plants = FileSensor(
-    task_id='check_for_new_plants',
-    filepath=input_plants_folder,
-    fs_conn_id='fs_default',
-    poke_interval=10,
-    timeout=600,
-    mode='poke',
-    dag=dag,
-)
+# # Define the tasks
+# check_for_new_plants = FileSensor(
+#     task_id='check_for_new_plants',
+#     filepath=input_plants_folder,
+#     fs_conn_id='fs_default',
+#     poke_interval=10,
+#     timeout=600,
+#     mode='poke',
+#     dag=dag,
+# )
 
 read_raw_images = PythonOperator(
     task_id='read_raw_images',
@@ -207,5 +207,6 @@ run_GUI = PythonOperator(
 )
 
 # Set the task dependencies
-check_for_new_plants >> read_raw_images >> make_color_images >> stitch_images >> do_cca >> run_segmentation >> calculate_features_and_statistics >> save_analysis_results >> run_GUI
+# check_for_new_plants >> 
+read_raw_images >> make_color_images >> stitch_images >> do_cca >> run_segmentation >> calculate_features_and_statistics >> save_analysis_results >> run_GUI
 
