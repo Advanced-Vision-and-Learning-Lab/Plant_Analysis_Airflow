@@ -6,11 +6,7 @@ This repository contains Airflow DAG for plant analysis pipeline
 - [Airflow DAG Configuration Setup](#airflow-dag-configuration-setup)
   - [Prerequisites](#prerequisites)
   - [Usage](#usage)
-    - [1. Default DAG Folder (Repo Folder)](#1-default-dag-folder-repo-folder)
-    - [2. Custom DAG Folder](#2-custom-dag-folder)
-    - [3. Environment Setup](#3-environment-setup)
-    - [4. Optional: Restart Airflow Services](#4-optional-restart-airflow-services)
-- [Airflow UI](#airflow-ui)
+- [Airflow Instructions](#airflow-instructions)
 - [TO-DO](#to-do)
 - [Containerization Considerations](#containerization-considerations)
 
@@ -99,7 +95,7 @@ The setup process logs its actions to three log files:
 Check these logs for detailed information about the setup process.
 
 
-## Workflow running instructions:
+## Airflow Instructions
 ---
 
 Make sure to modify `segmentation_model_weights_path`, `data_dir` and `output_dir` in `pipeline_config.yaml`
