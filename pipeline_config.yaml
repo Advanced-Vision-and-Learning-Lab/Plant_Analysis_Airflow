@@ -1,5 +1,7 @@
 pipeline_batch_size: 100
-segmentation_model_weights_path: 'yolo_segmentation_model.pt'
+segmentation_model_weights_path: '/dev/shm/Desktop/avll/Plant_Analysis_Airflow/yolo_segmentation_model.pt'
+data_dir: "/dev/shm/Desktop/avll/data/old_data_dumps/airflow/Raw_Images" 
+output_dir: "/dev/shm/Desktop/avll/output/test"
 segmentation_confidence: 0.128
 cca_variable_k: 2
 device: 'cpu'
