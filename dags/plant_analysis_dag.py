@@ -8,12 +8,12 @@ import gradio as gr
 from gradio_viz_app import GUI_Viz
 from Plant_Analysis import Plant_Analysis
 import pickle
-
+import yaml
 # Define default arguments
 default_args = {
-   'owner': 'airflow',
+   'owner': 'AVLL',
     'depends_on_past': True,
-    'start_date': datetime(2023, 7, 1),
+    'start_date': datetime.today(),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -22,16 +22,24 @@ default_args = {
 
 # Define the DAG
 dag = DAG(
-    'plant_analysis_workflow',
+    'plant_phenotyping_analysis',
     default_args=default_args,
     description='A plant analysis workflow',
     schedule_interval=None,  # Set to None to run the DAG only when triggered
 )
 
-# Define the input and output directories
-input_plants_folder = '/home/grads/u/uday/Documents/Agri_Project/Airflow/dags/Plants'
-interm_folder = '/home/grads/u/uday/Documents/Agri_Project/Airflow/dags/interm_objects'
-save_analysis_result_folder = '/home/grads/u/uday/Documents/Agri_Project/Airflow/dags/Viz_Result'
+yaml_path = os.path.join(os.environ['PROJECT_HOME'], 'pipeline_config.yaml')
+
+print(f"yaml_path: {yaml_path}")
+
+with open(yaml_path, 'r') as file:
+    pipeline_config = yaml.safe_load(file)
+
+input_plants_folder = pipeline_config["data_dir"]
+output_dir = pipeline_config["output_dir"]
+
+interm_folder = f'{output_dir}/intermediate_objects'
+save_analysis_result_folder = f'{output_dir}/Viz_Result'
 
 # Ensure the output directory exists
 os.makedirs(save_analysis_result_folder, exist_ok=True)
@@ -147,17 +155,6 @@ def save_analysis_results():
     f.close()
     del plant_analysis
 
-# Define the tasks
-check_for_new_plants = FileSensor(
-    task_id='check_for_new_plants',
-    filepath=input_plants_folder,
-    fs_conn_id='fs_default',
-    poke_interval=10,
-    timeout=600,
-    mode='poke',
-    dag=dag,
-)
-
 read_raw_images = PythonOperator(
     task_id='read_raw_images',
     python_callable=read_raw_images,
@@ -200,12 +197,17 @@ save_analysis_results = PythonOperator(
     dag=dag,
 )
 
-run_GUI = PythonOperator(
-    task_id='run_visualization_GUI',
-    python_callable=launch_viz_gui,
-    dag=dag,
-)
+# run_GUI = PythonOperator(
+#     task_id='run_visualization_GUI',
+#     python_callable=launch_viz_gui,
+#     dag=dag,
+# )
 
 # Set the task dependencies
-check_for_new_plants >> read_raw_images >> make_color_images >> stitch_images >> do_cca >> run_segmentation >> calculate_features_and_statistics >> save_analysis_results >> run_GUI
+# check_for_new_plants >> 
+read_raw_images >> make_color_images >> stitch_images >> do_cca >> run_segmentation >> calculate_features_and_statistics >> save_analysis_results 
+# >> run_GUI
 
+
+if __name__ == "__main__":
+    dag.test()

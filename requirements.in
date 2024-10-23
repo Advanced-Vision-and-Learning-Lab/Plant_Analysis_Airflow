@@ -1,0 +1,11 @@
+apache-airflow
+gradio
+matplotlib
+numpy
+pandas
+Pillow
+plantcv
+scikit_learn
+scikit-image
+torchvision
+ultralytics
